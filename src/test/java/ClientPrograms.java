@@ -18,15 +18,7 @@ public class ClientPrograms {
     ArrayList <Program> programs = new ArrayList<>();
     @Given("a list of programs")
     public void a_list_of_programs() throws FileNotFoundException {
-        File file = new File("src/main/resources/programs.txt");
-        Scanner scanner = new Scanner(file);
-        String curLine;
-        while (scanner.hasNextLine()){
-            curLine = scanner.nextLine();
-            String [] array =  curLine.split(",");
-            Program program = new Program(array);
-            programs.add(program);
-        }
+        programs = Client.getAllPrograms();
     }
 
     @When("the client does not use a filter")

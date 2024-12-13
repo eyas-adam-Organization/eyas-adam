@@ -12,17 +12,8 @@ public class Client {
     }
 
     static public ArrayList<Program> getPrograms(String levelFilter, String focusFilter) throws FileNotFoundException {
-        ArrayList<Program> programs = new ArrayList<>();
+        ArrayList<Program> programs = getAllPrograms();
         ArrayList<Program> tempList = new ArrayList<>();
-        File file = new File("src/main/resources/programs.txt");
-        Scanner scanner = new Scanner(file);
-        String curLine;
-        while (scanner.hasNextLine()){
-            curLine = scanner.nextLine();
-            String [] array =  curLine.split(",");
-            Program program = new Program(array);
-            programs.add(program);
-        }
 
         if(levelFilter != null){
             for(Program program: programs){
@@ -40,6 +31,20 @@ public class Client {
                 }
             }
             programs = new ArrayList<>(tempList);
+        }
+        return programs;
+    }
+
+    static public ArrayList<Program> getAllPrograms() throws FileNotFoundException {
+        ArrayList<Program> programs = new ArrayList<>();
+        File file = new File("src/main/resources/programs.txt");
+        Scanner scanner = new Scanner(file);
+        String curLine;
+        while (scanner.hasNextLine()){
+            curLine = scanner.nextLine();
+            String [] array =  curLine.split(",");
+            Program program = new Program(array);
+            programs.add(program);
         }
         return programs;
     }
