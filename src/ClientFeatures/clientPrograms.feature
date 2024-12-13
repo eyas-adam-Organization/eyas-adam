@@ -19,6 +19,5 @@ Feature: Browse fitness programs by filters
 
   Scenario: Client selected to filter by "Difficulty" and "Focus Area"
     Given a list of programs
-    When the client chooses "difficulty" "beginner"
-    And the client chooses "Focus Area" "Weight Loss"
+    When the client chooses difficulty "beginner" and Focus Area "Weight Loss"
     Then show programs related to "beginner" and "Weight Loss"

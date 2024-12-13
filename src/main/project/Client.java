@@ -7,11 +7,7 @@ import java.util.Scanner;
 
 public class Client {
 
-    Client(){
-
-    }
-
-    static public ArrayList<Program> getPrograms(String levelFilter, String focusFilter) throws FileNotFoundException {
+     public ArrayList<Program> getPrograms(String levelFilter, String focusFilter) throws FileNotFoundException {
         ArrayList<Program> programs = getAllPrograms();
         ArrayList<Program> tempList = new ArrayList<>();
 
@@ -35,7 +31,7 @@ public class Client {
         return programs;
     }
 
-    static public ArrayList<Program> getAllPrograms() throws FileNotFoundException {
+    public ArrayList<Program> getAllPrograms() throws FileNotFoundException {
         ArrayList<Program> programs = new ArrayList<>();
         File file = new File("src/main/resources/programs.txt");
         Scanner scanner = new Scanner(file);
