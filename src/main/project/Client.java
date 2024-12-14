@@ -6,6 +6,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Client {
+    String name;
+    int age;
+    int weight;
+    int BMI;
+
+
+
+    ArrayList <Program> completedPrograms = new ArrayList<>();
+
+    public Client(){
+        completedPrograms.add(new Program("Weight Loos Basic",14,"beginner","Weight Loss", null, null, null, 35));
+        completedPrograms.add(new Program("Muscle Mastery",28,"advanced","Muscle Building",null,null,null,50));
+    }
+
+
 
      public ArrayList<Program> getPrograms(String levelFilter, String focusFilter) throws FileNotFoundException {
         ArrayList<Program> programs = getAllPrograms();

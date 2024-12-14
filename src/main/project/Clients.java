@@ -1,5 +1,7 @@
 
 
+import io.cucumber.datatable.internal.difflib.StringUtills;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class Clients {
     static String successSignupMessage = "SIGNUP SUCCESSFUL: Welcome";
     static String failedUsernameSignupMessage = "SIGNUP UNSUCCESSFUL: Username already used, try another unique username";
     static String failedPasswordSignupMessage = "SIGNUP UNSUCCESSFUL: Password should be at least 8 characters long";
+    static String failedProgramSignupMessage = "SIGNUP UNSUCCESSFUL: Program name chosen is not registered, please chose a registered program name";
 
     static int clientLoginCode = 0;
     static int clientProfileCode = 1;
@@ -46,7 +49,7 @@ public class Clients {
     }
 
 
-    public String clientSignUp(String username, String password){
+    public String clientSignUp(String username, String password, String program){
         if (userExists(username)){
             currentMenu = clientSignupCode;
             updateMenu();
@@ -57,12 +60,19 @@ public class Clients {
             updateMenu();
             return failedPasswordSignupMessage;
         }
+        if (!programRegistered(program)){
+            currentMenu = clientSignupCode;
+            updateMenu();
+            return failedProgramSignupMessage;
+        }
         activeUser = username;
         currentMenu = clientProfileCode;
         updateMenu();
+        addClientToProgram(username, program);
         //addUserToFile(username, password);
         return successSignupMessage;
     }
+
 
     public static boolean userExists(String username) {
         boolean exists = false;
@@ -106,6 +116,23 @@ public class Clients {
         return !(password.length() >= 8);
     }
 
+    private boolean programRegistered(String program) {
+        try {
+            Scanner scanner = new Scanner(new File("src/main/resources/programs.txt"));
+            String curLine;
+            while (scanner.hasNextLine()) {
+                curLine = scanner.nextLine();
+                String[] array = curLine.split(",");
+                if (array[0].equals(program)){
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+        return false;
+    }
+
     public static void addUserToFile(String username, String password){
         try {
             String string = username + "," + password + "," + "None" + "," + "None" + "," + "None" + "," + "None" + "\n";
@@ -117,5 +144,54 @@ public class Clients {
 
     public static void updateMenu(){
 
+    }
+
+    public static void addClientToProgram(String username, String program){
+        try {
+            String string = username + "," + program + "\n";
+            Files.write(Paths.get("src/main/resources/programs_clients.txt"), string.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+    }
+
+
+    public static void removeClientFromProgram(String username){
+        StringBuilder string = new StringBuilder();
+        try {
+            Scanner scanner = new Scanner(new File("src/main/resources/programs_clients.txt"));
+            String curLine;
+            while (scanner.hasNextLine()) {
+                curLine = scanner.nextLine();
+                String[] array = curLine.split(",");
+                if (array[0].equals(username)){
+                    continue;
+                }
+                string.append(curLine);
+                string.append("\n");
+            }
+            Files.write(Paths.get("src/main/resources/programs_clients.txt"), string.toString().getBytes(StandardCharsets.UTF_8));
+        } catch (FileNotFoundException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean isClientInProgram(String username, String program){
+        try {
+            Scanner scanner = new Scanner(new File("src/main/resources/programs_clients.txt"));
+            String curLine;
+            while (scanner.hasNextLine()) {
+                curLine = scanner.nextLine();
+                String[] array = curLine.split(",");
+                if (array[0].equals(username)){
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+        return false;
     }
 }

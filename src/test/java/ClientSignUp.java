@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientSignUp {
     Clients clients;
+    Program program;
 
     public ClientSignUp(Clients c){
         clients = c;
@@ -12,9 +13,9 @@ public class ClientSignUp {
 
     String actualMessage;
 
-    @When("client entered username {string} and password {string}")
-    public void client_entered_username_and_password(String username, String password){
-        actualMessage = clients.clientSignUp(username, password);
+    @When("client entered username {string} and password {string} for program {string}")
+    public void client_entered_username_and_password(String username, String password, String program){
+        actualMessage = clients.clientSignUp(username, password, program);
     }
 
     @Then("tell client that the username is used")
@@ -25,6 +26,11 @@ public class ClientSignUp {
     @Then("tell the used that the password is short")
     public void tell_the_used_that_the_password_is_short() {
         assertEquals(Clients.failedPasswordSignupMessage, actualMessage);
+    }
+
+    @Then("tell client that the program is not a registered program")
+    public void tellClientThatTheProgramIsNotARegisteredProgram() {
+        assertEquals(Clients.failedProgramSignupMessage, actualMessage);
     }
 
     @Then("tell the user that the account was created successfully")
@@ -41,5 +47,11 @@ public class ClientSignUp {
     @Then("redirect client to sign up")
     public void redirect_client_to_sign_up() {
         assertEquals(Clients.clientSignupCode, clients.currentMenu);
+    }
+
+    @Then("add the user {string} to the list of clients registered in the program {string}")
+    public void addTheUserToTheListOfClientsRegisteredInTheProgram(String username, String program) {
+        assertTrue(Clients.isClientInProgram(username, program));
+        Clients.removeClientFromProgram(username);
     }
 }

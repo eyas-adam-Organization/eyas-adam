@@ -1,10 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Program {
     String title;
     int duration;
+    ArrayList <String> reviews = new ArrayList<>();
+    int rating = 0;
+    ArrayList <Client> clientsEnrolled = new ArrayList<>();
 
     public String getLevel() {
         return level;
@@ -29,17 +33,7 @@ public class Program {
         this.image = image;
         this.documents = documents;
         price = Price;
-    }
 
-    Program(String title,  int duration,  String level,  String goal, int Price){
-        this.title = title;
-        this.duration = duration;
-        this.level = level;
-        this.focus = goal;
-        this.video = null;
-        this.image = null;
-        this.documents = null;
-        price = Price;
     }
 
     Program(String[] program) {
