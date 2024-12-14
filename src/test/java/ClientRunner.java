@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
         monochrome = true,
         snippets = SnippetType.CAMELCASE,
         plugin = {"html: target/cucumber.html"}
+
 )
 public class ClientRunner {
 }
