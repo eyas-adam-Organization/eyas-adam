@@ -1,3 +1,2 @@
 adam,Muscle Mastery
-eyas,Weight Loos Advanced
-adam,Muscle Masteryuser123,Weight Loss Basic
+eyas,Weight Loss Advanced

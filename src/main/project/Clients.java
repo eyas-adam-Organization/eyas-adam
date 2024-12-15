@@ -185,7 +185,7 @@ public class Clients {
             while (scanner.hasNextLine()) {
                 curLine = scanner.nextLine();
                 String[] array = curLine.split(",");
-                if (array[0].equals(username)){
+                if (array[0].equals(username) && array[1].equalsIgnoreCase(program)){
                     return true;
                 }
             }

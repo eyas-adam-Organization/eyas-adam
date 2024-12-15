@@ -19,4 +19,4 @@ Feature: Creation of accounts for clients
     When client entered username "user123" and password "555555555" for program "Weight Loss Basic"
     Then tell the user that the account was created successfully
     Then sign the user in with username "user123"
-    Then add the user "user123" to the list of clients registered in the program "Weight Loos Basic"
+    Then add the user "user123" to the list of clients registered in the program "Weight Loss Basic"
