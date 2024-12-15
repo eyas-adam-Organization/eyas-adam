@@ -52,6 +52,6 @@ public class ClientSignUp {
     @Then("add the user {string} to the list of clients registered in the program {string}")
     public void addTheUserToTheListOfClientsRegisteredInTheProgram(String username, String program) {
         assertTrue(Clients.isClientInProgram(username, program));
-        Clients.removeClientFromProgram(username);
+        Clients.removeClientFromProgram(username, program);
     }
 }

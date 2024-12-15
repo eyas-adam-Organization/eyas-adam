@@ -201,7 +201,7 @@ public class Clients {
     }
 
 
-    public static void removeClientFromProgram(String username){
+    public static void removeClientFromProgram(String username, String program){
         StringBuilder string = new StringBuilder();
         try {
             Scanner scanner = new Scanner(new File("src/main/resources/programs_clients.txt"));
@@ -209,7 +209,7 @@ public class Clients {
             while (scanner.hasNextLine()) {
                 curLine = scanner.nextLine();
                 String[] array = curLine.split(",");
-                if (array[1].equals(username)){
+                if (array[1].equals(username) && array[2].equalsIgnoreCase(program)){
                     continue;
                 }
                 string.append(curLine);
@@ -231,6 +231,23 @@ public class Clients {
                 curLine = scanner.nextLine();
                 String[] array = curLine.split(",");
                 if (array[1].equals(username) && array[2].equalsIgnoreCase(program)){
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean didClientNotCompleteProgram(String username, String program){
+        try {
+            Scanner scanner = new Scanner(new File("src/main/resources/programs_clients.txt"));
+            String curLine;
+            while (scanner.hasNextLine()) {
+                curLine = scanner.nextLine();
+                String[] array = curLine.split(",");
+                if (array[0].equals("0") && array[1].equals(username) && array[2].equalsIgnoreCase(program)){
                     return true;
                 }
             }

@@ -42,7 +42,7 @@ public class clientCompletedProgramRating {
 
     @Then("Thank the client for the their review and say that you'll try to fix the problem")
     public void thank_the_client_for_the_their_review_and_say_that_you_ll_try_to_fix_the_problem() {
-        assertEquals( Client.REVIEW_REPLY_MESSAGES[Client.REVIEW_OKAY_MESSAGE], actualMessage);
+        assertEquals(Client.REVIEW_REPLY_MESSAGES[Client.REVIEW_OKAY_MESSAGE], actualMessage);
     }
 
     @Then("Apologize to the client and assure them that their suggestion will be considered")

@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -46,6 +47,10 @@ public class Client {
     public static int REVIEW_OKAY_MESSAGE = 4;
     public static int REVIEW_GOOD_MESSAGE = 5;
 
+    public static int ENROLLMENT_FAIL_PROGRAM_DOES_NOT_EXIST = 0;
+    public static int ENROLLMENT_FAIL_ALREADY_IN_PROGRAM = 1;
+    public static int ENROLLMENT_SUCCESS = 2;
+
     public static String [] ERROR_MESSAGES = {
             "UPDATE SUCCESS: Data updated successfully",
             "UPDATE FAILED: the value of age should be a numerical value",
@@ -60,7 +65,7 @@ public class Client {
             "UPDATE FAILED: the value of goal weight should be within the range [40KG - 240KG]",
     };
 
-    public static String[] REVIEW_REPLY_MESSAGES = {
+    public static String [] REVIEW_REPLY_MESSAGES = {
             "REVIEW WAS NOT ACCEPTED: You did not complete this program yet, you can review it once you have completed it.",
             "REVIEW WAS NOT ACCEPTED: Please enter a numerical value only for the rating.",
             "REVIEW WAS NOT ACCEPTED: Please enter a value within [0 - 10] for rating.",
@@ -72,6 +77,12 @@ public class Client {
                     "                Your suggestion will be considered to try improve our programs." ,
             "REVIEW ACCEPTED: Thanks for reviewing our program!\n" +
                     "                Thanks for the good review and we hope that you'll continue to enjoy our programs"
+    };
+
+    public static String [] ENROLLMENT_REPLY_MESSAGES = {
+            "ENROLLMENT UNSUCCESSFUL: A program with that name does not exist",
+            "ENROLLMENT UNSUCCESSFUL: You are already in the program!",
+            "ENROLLMENT SUCCESSFUL: You are now enrolled in the program"
     };
 
 
@@ -224,8 +235,32 @@ public class Client {
         if(Integer.parseInt(rating) > 3 && Integer.parseInt(rating) <= 7)
             return REVIEW_REPLY_MESSAGES[REVIEW_OKAY_MESSAGE];
 
+        writeReviewToFile(program, rating, review, suggestion);
         return REVIEW_REPLY_MESSAGES[REVIEW_GOOD_MESSAGE];
     }
+
+    public void writeReviewToFile(String program, String rating, String review, String suggestion){
+
+        try{
+            StringBuilder builder = new StringBuilder();
+            Scanner scanner = new Scanner(new File("src/main/resources/programs_clients.txt"));
+            String curLine;
+            while (scanner.hasNextLine()) {
+                curLine = scanner.nextLine();
+                String[] array = curLine.split(",");
+                if(array[0].equals("1") && array[1].equals(username) && array[2].equalsIgnoreCase(program)){
+                    curLine = "1," + username + "," + program + "," + rating + "," + review + "," + suggestion;
+                }
+                builder.append(curLine).append("\n");
+            }
+            Files.write(Paths.get("src/main/resources/programs_clients.txt"), builder.toString().getBytes(StandardCharsets.UTF_8));
+        } catch (FileNotFoundException e){
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public boolean UserDidNotCompleteProgram(String program){
         try{
@@ -243,4 +278,19 @@ public class Client {
     }
         return true;
     }
+
+    public String enrollInProgram(String program){
+        if(!Programs.doesProgramExist(program))
+            return ENROLLMENT_REPLY_MESSAGES[ENROLLMENT_FAIL_PROGRAM_DOES_NOT_EXIST];
+        if(Clients.didClientNotCompleteProgram(username, program))
+            return ENROLLMENT_REPLY_MESSAGES[ENROLLMENT_FAIL_ALREADY_IN_PROGRAM];
+        try {
+            String string = "0," + username + "," + program + "\n";
+            Files.write(Paths.get("src/main/resources/programs_clients.txt"), string.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
+        } catch (IOException e){
+
+        }
+        return ENROLLMENT_REPLY_MESSAGES[ENROLLMENT_SUCCESS];
+    }
+
 }
