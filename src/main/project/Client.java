@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
@@ -85,7 +86,6 @@ public class Client {
     }
 
     public String updateValues(String username, String age, String weight, String BMI, String goalBMI, String goalWeight, String preferences, String restrictions){
-        System.out.println(age + "," + weight + "," + BMI + "," + goalBMI + "," + goalWeight);
         if(isNotInteger(age))
             return ERROR_MESSAGES[ERROR_CODE_AGE_N];
 
@@ -124,17 +124,30 @@ public class Client {
     }
 
     public static void updateToFile(String username, String age, String weight, String BMI, String goalBMI, String goalWeight, String preferences, String restrictions){
+        Path path = Paths.get("src/main/resources/clients.txt");
         try {
-            String string = username + "," + getPassword(username) + "," + age + "," + weight + "," + BMI + "," + goalBMI + "," + goalWeight + "," + preferences + "," + restrictions;
-            Files.write(Paths.get("src/main/resources/programs_clients.txt"), string.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
+            StringBuilder stringBuilder = new StringBuilder();
+            Scanner scanner = new Scanner(new File("src/main/resources/clients.txt"));
+            String curLine;
+            while (scanner.hasNextLine()) {
+                curLine = scanner.nextLine();
+                String[] array = curLine.split(",");
+                if(array[0].equals(username)){
+                    curLine = username + "," + getPassword(username) + "," + age + "," + weight + "," + BMI + "," + goalBMI + "," + goalWeight + "," + preferences + "," + restrictions;
+                }
+                stringBuilder.append(curLine).append("\n");
+            }
+            Files.write(path, stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
+        } catch (FileNotFoundException e){
+
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
     public static String getPassword(String username){
         try {
-            Scanner scanner = new Scanner(new File("src/main/resources/programs_clients.txt"));
+            Scanner scanner = new Scanner(new File("src/main/resources/clients.txt"));
             String curLine;
             while (scanner.hasNextLine()) {
                 curLine = scanner.nextLine();
@@ -151,7 +164,7 @@ public class Client {
     public static boolean wasUpdated(String username, String age, String weight, String BMI, String goalBMI, String goalWeight, String preferences, String restrictions){
         try {
             String string = username + "," + getPassword(username) + "," + age + "," + weight + "," + BMI + "," + goalBMI + "," + goalWeight + "," + preferences + "," + restrictions;
-            Scanner scanner = new Scanner(new File("src/main/resources/programs_clients.txt"));
+            Scanner scanner = new Scanner(new File("src/main/resources/clients.txt"));
             String curLine;
             while (scanner.hasNextLine()) {
                 curLine = scanner.nextLine();

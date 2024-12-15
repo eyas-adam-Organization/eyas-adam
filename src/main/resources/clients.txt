@@ -1,2 +1,2 @@
-adam,555555555,Not defined,Not defined,Not defined,Not defined,Not defined,Not defined,Not defined
+adam,555555555,25,80,28,23,72,diary-free food?,well, diary
 eyas,555555555,Not defined,Not defined,Not defined,Not defined,Not defined,Not defined,Not defined
