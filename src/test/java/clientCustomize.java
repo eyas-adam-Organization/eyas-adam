@@ -5,20 +5,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class clientCustomize {
     public String actualMessage;
 
+    Clients clients;
     Client client;
-    String username;
-    public clientCustomize(Client c){
-        client = c;
+    public clientCustomize(Clients c){
+        clients = c;
     }
 
     @Given("the username is {string}")
-    public void the_username_is(String string) {
-        username = string;
+    public void the_username_is(String username) {
+       client = new Client(username);
     }
 
     @When("client entered {string} {string} {string} {string} {string} {string} {string} for the values respectively")
     public void client_entered_for_the_values_respectively(String age, String weight, String BMI, String goalBMI, String goalWeight, String preferences, String restrictions) {
-        actualMessage = client.updateValues(username, age, weight, BMI, goalBMI, goalWeight, preferences, restrictions);
+        actualMessage = client.updateValues(age, weight, BMI, goalBMI, goalWeight, preferences, restrictions);
     }
 
     @Then("Tell the client that the age should be a numerical value")
@@ -71,9 +71,9 @@ public class clientCustomize {
         assertEquals(Client.ERROR_MESSAGES[Client.ERROR_CODE_GOAL_WEIGHT_R], actualMessage);
     }
 
-    @Then("update client {string} data {string} {string} {string} {string} {string} {string} {string}")
-    public void update_client_data(String username, String age, String weight, String BMI, String goalBMI, String goalWeight, String preferences, String restrictions) {
-        assertTrue(Client.wasUpdated(username, age, weight, BMI, goalBMI, goalWeight, preferences, restrictions));
+    @Then("update client data {string} {string} {string} {string} {string} {string} {string}")
+    public void update_client_data( String age, String weight, String BMI, String goalBMI, String goalWeight, String preferences, String restrictions) {
+        assertTrue(client.wasUpdated(age, weight, BMI, goalBMI, goalWeight, preferences, restrictions));
     }
 
     @Then("Tell the client that the update was successful")

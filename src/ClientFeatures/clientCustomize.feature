@@ -56,5 +56,5 @@ Feature: Customizing Client's profile data
   Scenario: Client tried to update with suitable values
     Given the username is "adam"
     When client entered "25" "80" "28" "23" "72" "diary-free food?" "well, diary" for the values respectively
-    Then update client "adam" data "25" "80" "28" "23" "72" "diary-free food?" "well, diary"
+    Then update client data "25" "80" "28" "23" "72" "diary-free food?" "well, diary"
     Then Tell the client that the update was successful

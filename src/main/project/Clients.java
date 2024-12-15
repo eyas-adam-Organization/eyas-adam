@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Clients {
@@ -30,6 +31,50 @@ public class Clients {
 
     public String activeUser;
     public int currentMenu;
+
+
+
+    public ArrayList<Program> getPrograms(String levelFilter, String focusFilter) throws FileNotFoundException {
+        ArrayList<Program> programs = getAllPrograms();
+        ArrayList<Program> tempList = new ArrayList<>();
+
+        if(levelFilter != null){
+            for(Program program: programs){
+                if(levelFilter.equalsIgnoreCase(program.getLevel())){
+                    tempList.add(program);
+                }
+            }
+            programs = new ArrayList<>(tempList);
+        }
+        if (focusFilter != null){
+            tempList = new ArrayList<>();
+            for(Program program: programs){
+                if(focusFilter.equalsIgnoreCase(program.getFocus())){
+                    tempList.add(program);
+                }
+            }
+            programs = new ArrayList<>(tempList);
+        }
+        return programs;
+    }
+
+    public ArrayList<Program> getAllPrograms() throws FileNotFoundException {
+        ArrayList<Program> programs = new ArrayList<>();
+        File file = new File("src/main/resources/programs.txt");
+        Scanner scanner = new Scanner(file);
+        String curLine;
+        while (scanner.hasNextLine()){
+            curLine = scanner.nextLine();
+            String [] array =  curLine.split(",");
+            Program program = new Program(array);
+            programs.add(program);
+        }
+        return programs;
+    }
+
+
+
+
 
     public String clientLogin(String username, String password){
         if(!userExists(username)){
@@ -148,7 +193,7 @@ public class Clients {
 
     public static void addClientToProgram(String username, String program){
         try {
-            String string = username + "," + program + "\n";
+            String string = "0," + username + "," + program + "\n";
             Files.write(Paths.get("src/main/resources/programs_clients.txt"), string.getBytes(StandardCharsets.UTF_8), StandardOpenOption.APPEND);
         } catch (IOException e) {
             System.err.println("Error writing to file: " + e.getMessage());
@@ -164,7 +209,7 @@ public class Clients {
             while (scanner.hasNextLine()) {
                 curLine = scanner.nextLine();
                 String[] array = curLine.split(",");
-                if (array[0].equals(username)){
+                if (array[1].equals(username)){
                     continue;
                 }
                 string.append(curLine);
@@ -185,7 +230,7 @@ public class Clients {
             while (scanner.hasNextLine()) {
                 curLine = scanner.nextLine();
                 String[] array = curLine.split(",");
-                if (array[0].equals(username) && array[1].equalsIgnoreCase(program)){
+                if (array[1].equals(username) && array[2].equalsIgnoreCase(program)){
                     return true;
                 }
             }
@@ -194,4 +239,9 @@ public class Clients {
         }
         return false;
     }
+
+    public Client getClientByUsername(String username){
+        return new Client(username);
+    }
+
 }

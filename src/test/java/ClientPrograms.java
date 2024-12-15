@@ -8,22 +8,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientPrograms {
 
-    Client client;
+    Clients clients;
 
-    public ClientPrograms(Client c){
-        client = c;
+    public ClientPrograms(Clients c){
+        clients = c;
     }
 
     ArrayList <Program> programs = new ArrayList<>();
     ArrayList <Program> actualPrograms;
     @Given("a list of programs")
     public void a_list_of_programs() throws FileNotFoundException {
-        programs = client.getAllPrograms();
+        programs = clients.getAllPrograms();
     }
 
     @When("the client does not use a filter")
     public void the_client_does_not_use_a_filter() throws FileNotFoundException {
-        actualPrograms = client.getPrograms(null, null);
+        actualPrograms = clients.getPrograms(null, null);
     }
 
     @Then("show all programs available")
@@ -40,9 +40,9 @@ public class ClientPrograms {
     @When("the client chooses {string} {string}")
     public ArrayList<Program> the_client_chooses(String filterType, String filterValue) throws FileNotFoundException {
         if(filterType.equalsIgnoreCase("difficulty")){
-            actualPrograms = client.getPrograms(filterValue, null);
+            actualPrograms = clients.getPrograms(filterValue, null);
         } else if(filterType.equalsIgnoreCase("focus area"))
-            actualPrograms = client.getPrograms(null, filterValue);
+            actualPrograms = clients.getPrograms(null, filterValue);
         return actualPrograms;
     }
 
@@ -71,7 +71,7 @@ public class ClientPrograms {
 
     @When("the client chooses difficulty {string} and Focus Area {string}")
     public void the_client_chooses_difficulty_and_focus_area(String difficulty, String focus) throws FileNotFoundException {
-        actualPrograms =  client.getPrograms(difficulty, focus);
+        actualPrograms =  clients.getPrograms(difficulty, focus);
     }
 
     @Then("show programs related to {string} and {string}")
