@@ -8,7 +8,6 @@ public class Program {
     int duration;
     ArrayList <String> reviews = new ArrayList<>();
     int rating = 0;
-    ArrayList <Client> clientsEnrolled = new ArrayList<>();
 
     public String getLevel() {
         return level;

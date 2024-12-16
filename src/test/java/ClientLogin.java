@@ -15,31 +15,26 @@ public class ClientLogin {
 
     @Then("Tell the client that they were logged in successfully")
     public void tell_the_client_that_they_were_logged_in_successfully() {
-        assertEquals(Clients.successLoginMessage, actualResponseMessage);
+        assertEquals(Clients.SUCCESS_LOGIN_MESSAGE, actualResponseMessage);
     }
 
     @Then("set the current registered user {string}")
     public void set_the_current_registered_user(String username) {
-        assertEquals(username, clients.activeUser);
-    }
-
-    @Then("redirect client to user profile")
-    public void redirect_client_to_user_profile() {
-        assertEquals(Clients.clientProfileCode, clients.currentMenu);
+        assertEquals(username, clients.activeClient);
     }
 
     @Then("Tell the client that they were not logged in successfully due to username issue")
     public void tell_the_client_that_they_were_not_logged_in_successfully_due_to_username_issue() {
-        assertEquals(Clients.failedUsernameLoginMessage, actualResponseMessage);
+        assertEquals(Clients.FAILED_LOGON_USERNAME_MESSAGE, actualResponseMessage);
     }
 
     @Then("Tell the client that they were not logged in successfully due to password issue")
     public void tell_the_client_that_they_were_not_logged_in_successfully_due_to_password_issue() {
-        assertEquals(Clients.failedPasswordLoginMessage, actualResponseMessage);
+        assertEquals(Clients.FAILED_LOGIN_PASSWORD_MESSAGE, actualResponseMessage);
     }
 
-    @Then("redirect client back to login")
-    public void redirect_client_back_to_login() {
-        assertEquals(Clients.clientLoginCode, clients.currentMenu);
+    @Then("redirect client to {string}")
+    public void redirect_client_back_to_login(String menu) {
+        assertEquals(menu, Clients.CLIENT_PROFILE_SEND_TEXTS[clients.currentMenu]);
     }
 }
