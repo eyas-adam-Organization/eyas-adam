@@ -1,0 +1,3 @@
+Weight Loss Basic,14,beginner,Weight Loss,null,null,null,35
+Weight Loss Advanced,14,advanced,Weight Loss,null,null,null,35
+Muscle Mastery,28,advanced,Muscle Building,null,null,null,50
