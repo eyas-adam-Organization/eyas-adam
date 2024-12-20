@@ -3,13 +3,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-public class clientCompletedProgramRating {
+public class ClientCompletedProgramRating {
 
     Clients clients;
     String actualMessage;
 
 
-    public clientCompletedProgramRating(Clients c){
+    public ClientCompletedProgramRating(Clients c){
         clients = c;
     }
 

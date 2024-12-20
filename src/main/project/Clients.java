@@ -181,6 +181,27 @@ public class Clients {
         return REVIEW_REPLY_MESSAGES[REVIEW_GOOD_MESSAGE];
     }
 
+    public ArrayList<String> getPersonalInfo(String username){
+        ArrayList<String> info = new ArrayList<>();
+        try{
+            Scanner scanner = new Scanner(new File("src/main/resources/clients.txt"));
+            String curLine;
+            while (scanner.hasNextLine()) {
+                curLine = scanner.nextLine();
+                String[] array = curLine.split(",", 7);
+                if(array[0].equals(username)){
+                    for(int i = 1; i < 7; i++){
+                        info.add(array[i]);
+                    }
+                }
+            }
+        } catch (FileNotFoundException e){
+
+        }
+        return info;
+    }
+
+
     public boolean UserDidNotCompleteProgram(String program){
         try{
             Scanner scanner = new Scanner(new File("src/main/resources/programs_clients.txt"));

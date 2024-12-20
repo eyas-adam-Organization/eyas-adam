@@ -2,11 +2,11 @@ import io.cucumber.java.en.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class clientCustomize {
+public class ClientCustomize {
     public String actualMessage;
 
     Clients clients;
-    public clientCustomize(Clients c){
+    public ClientCustomize(Clients c){
         clients = c;
     }
 
