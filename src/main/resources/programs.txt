@@ -1,0 +1,7 @@
+program5,hard,mmmm,15,null,null,null,40
+program6,hard,mmmm,15,null,null,null,50
+program7,hard,mmmm,15,null,null,null,10
+program2,hard,Bulding musicals,10,null,null,null,20
+program3,hard,mmmm,15,null,null,null,12
+program1,beginner,Weight Loss,14,null,null,null,35
+program4,hard,mmmm,15,null,null,null,20
