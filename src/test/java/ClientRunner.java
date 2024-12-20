@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/ClientFeatures",
+        features = "src/InstructorFeatures/Create-group-session.feature",
         monochrome = true,
         snippets = SnippetType.CAMELCASE,
         plugin = {"html: target/cucumber.html"}

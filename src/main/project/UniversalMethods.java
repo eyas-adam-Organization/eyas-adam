@@ -7,4 +7,4 @@ public class UniversalMethods {
             return false;
         }
     }
-}
+ 

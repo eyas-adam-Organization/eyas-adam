@@ -1,11 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class Instructors {
 
@@ -13,6 +16,7 @@ public class Instructors {
     static String SUCCESS_SIGNUP_MESSAGE = "SIGNUP SUCCESSFUL: Welcome";
     static String FAILED_SIGNUP_USERNAME_MESSAGE = "SIGNUP UNSUCCESSFUL: Username already used, try another unique username";
     static String FAILED_SIGNUP_PASSWORD_MESSAGE = "SIGNUP UNSUCCESSFUL: Password should be at least 8 characters long";
+    private ArrayList<Instructor> instructors;
 
     public String instructorSignup(String username, String password){
         if(instructorExists(username))
@@ -77,4 +81,22 @@ public class Instructors {
         }
     }
 
-}
+    public Instructors() throws FileNotFoundException {
+        Scanner scanner=new Scanner(new File("src/main/resources/instructors.txt"));
+        instructors=new ArrayList<>();
+        String curLine;
+        while (scanner.hasNextLine()){
+            curLine=scanner.nextLine();
+            String[]array=curLine.split(",");
+             if(UniversalMethods.isInteger(array[0])){
+                 Instructor instructor=new Instructor(Integer.parseInt(array[0]));
+                 instructors.add(instructor);
+             }
+        }
+    }
+    public Instructor searchForInstructor(int ID){
+        for (Instructor instructor:instructors)if(instructor.getInstructorID()==ID)return instructor;
+        return null;
+
+    }
+ }

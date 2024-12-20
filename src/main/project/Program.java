@@ -1,9 +1,12 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+ 
+import java.lang.reflect.Array;
+ 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Program {
+public class Program implements Cloneable{
     String title;
     int duration;
     ArrayList <String> reviews = new ArrayList<>();
@@ -20,7 +23,8 @@ public class Program {
     File image;
     File documents;
     int price;
-    Program(String title,  int duration,  String level,  String goal,  File video,  File image,  File documents, int Price){
+    private ArrayList<Client> clients=new ArrayList<>();
+    Program(String title,  String level, String goal , int duration, File video,  File image,  File documents, int Price){
         this.title = title;
         this.duration = duration;
         this.level = level;
@@ -115,6 +119,5 @@ public class Program {
     }
 
 
-
-
+ 
 }
