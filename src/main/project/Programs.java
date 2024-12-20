@@ -33,7 +33,7 @@ public class Programs {
     private ArrayList<Program> programs;
     public Programs() throws FileNotFoundException, MalformedURLException {
         programs=new ArrayList<>();
-        Scanner scanner = new Scanner(new File("src/main/resources/programs.txt"));
+        Scanner scanner = new Scanner(new File("src/main/resources/programsss.txt"));
         String curLine;
         while (scanner.hasNextLine()){
             curLine = scanner.nextLine();
@@ -77,7 +77,7 @@ public class Programs {
 
         Program program=new Program(title , level ,goal,Integer.parseInt(duration),video.equals("null")?null:new File(video),image.equals("null")?null:new File(image),documents.equals("null")?null:new File(documents), Integer.parseInt(Price));
         String programToFile=title+","+level+","+goal+","+duration+","+video+","+image+","+documents+","+Price;
-         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/programs.txt", true))) {
+         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/programsss.txt", true))) {
             writer.write(programToFile);
             writer.newLine(); // Add a new line for better formatting
          } catch (IOException e) {
@@ -110,7 +110,7 @@ public class Programs {
         toUpdatPrograme.setVideo(video.equals("null")?null:new File(video));
         toUpdatPrograme.setImage(image.equals("null")?null:new File(image));
         toUpdatPrograme.setDocuments(documents.equals("null")?null:new File(documents));
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/programs.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/programsss.txt"))) {
             String videoPath;
             String docPath;
             String imagePath;
@@ -146,7 +146,7 @@ public class Programs {
         }
         if(!flag)return "the program does not exist";
         programs.remove(toDeletePrograme);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/programs.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/programsss.txt"))) {
             String videoPath;
             String docPath;
             String imagePath;

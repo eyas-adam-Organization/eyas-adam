@@ -478,6 +478,9 @@ public class Clients {
         }
         return exists;
     }
+
+     private ArrayList<Client> clients;
+     private Programs programs;
     public Clients() throws IOException {
         clients=new ArrayList<>();
         programs=new Programs();

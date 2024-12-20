@@ -14,7 +14,7 @@ Feature: Monitor Client Progress
 
   Scenario: Monitor a non-existing client progress
     Given I have a list of clients with progress data
-    When I view the progress details for client "13"
+    When I view the progress details for client "17"
     Then I should see a warning message "this client does not exist"
 
   Scenario: Monitor progress when a client has incomplete progress data

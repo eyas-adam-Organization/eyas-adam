@@ -37,16 +37,7 @@ public class Program implements Cloneable{
     }
 
 
-    Program(String title,  String level, String goal , int duration, File video,  File image,  File documents, int Price){
-        this.title = title;
-        this.duration = duration;
-        this.level = level;
-        this.focus = goal;
-        this.video = video;
-        this.image = image;
-        this.documents = documents;
-        price = Price;
-    }
+
 
     Program(String title,  int duration,  String level,  String goal, int Price){
         this.title = title;
