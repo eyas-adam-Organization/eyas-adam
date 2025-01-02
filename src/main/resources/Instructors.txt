@@ -1,6 +1,0 @@
-1,instructor1
-2,instructor2
-3,instructor3
-4,instructor4
-5,instructor5
-6,instructor6

@@ -1,9 +1,13 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Stack;
 
 
 public class UniversalMethods {
+    public static Stack<File>tempfiles=new Stack<>();
+    private static int index=0;
     public static boolean isInteger(String str) {
         try {
             Integer.parseInt(str);
@@ -12,9 +16,12 @@ public class UniversalMethods {
             return false;
         }
     }
-    public static void getFile(String path){
+    public static void getFile(String path) throws IOException {
         File originalFile = new File(path);
-        File tempFile = new File("src/main/resources/tempfile.txt");
+        File tempFile =new File("src/main/resources/tempfile"+(index++)+".txt");
+        if(tempFile.createNewFile()){}
+
+        tempfiles.push(tempFile);
 
         try {
             // Step 1: Copy contents from original file to temp file
@@ -26,11 +33,12 @@ public class UniversalMethods {
     }
     public static void returnFile(String path){
         File originalFile = new File(path);
-        File tempFile = new File("src/main/resources/tempfile.txt");
+        File tempFile =tempfiles.pop();
 
         try {
             // Step 1: Copy contents from original file to temp file
             copyFile(tempFile, originalFile);
+            tempFile.delete();
 
 
         } catch (IOException e) {

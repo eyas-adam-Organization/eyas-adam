@@ -1,4 +1,5 @@
 import io.cucumber.java.en.*;
+import org.junit.jupiter.api.AfterAll;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;public class NotifyC
      }
     @When("I notify the clients enrolled in this program")
     public void iNotifyTheClientsEnrolledInThisProgram() throws CloneNotSupportedException, IOException {
-        UniversalMethods.getFile("src/main/resources/programs_clients.txt");
         // Write code here that turns the phrase above into concrete actions
         if(notification.equals("update")){
             program=programs.searchForProgram(programTitle);
@@ -48,7 +48,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;public class NotifyC
 
 
         }
-        UniversalMethods.returnFile("src/main/resources/programs_clients.txt");
 
 
     }
@@ -75,12 +74,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;public class NotifyC
     @When("I notify the clients enrolled in this program with no change")
     public void iNotifyTheClientsEnrolledInThisProgramWithNoChange() throws CloneNotSupportedException, IOException {
         // Write code here that turns the phrase above into concrete actions
-        UniversalMethods.getFile("src/main/resources/programs_clients.txt");
-        program=programs.searchForProgram(programTitle);
+         program=programs.searchForProgram(programTitle);
             Program programBefore=(Program) program.clone();
             String s=programs.UpdateProgram(program.getTitle() ,program.getLevel() ,program.getGoal() ,program.getDuration()+"" ,program.getVideo()==null?"null" : program.getVideo().getPath(),program.getImage()==null?"null":program.getImage().getPath(),program.getDocuments()==null? "null":program.getDocuments().getPath(), program.getPrice()+"");
             actualMessage=clients.NotifyClients(programBefore,program);
-        UniversalMethods.returnFile("src/main/resources/programs_clients.txt");
 
 
 
@@ -97,15 +94,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;public class NotifyC
      }
      @When("I notify for program that does not exist")
      public void iNotifyForProgramThatDoesNotExist() throws CloneNotSupportedException, IOException {
-         UniversalMethods.getFile("src/main/resources/programs_clients.txt");
-         program=programs.searchForProgram(programTitle);
+          program=programs.searchForProgram(programTitle);
          Program programBefore;
          if(program==null) programBefore=null;
          else programBefore=(Program) program.clone();
          actualMessage=clients.NotifyClients(programBefore,program);
-         UniversalMethods.returnFile("src/main/resources/programs_clients.txt");
 
      }
+
+
 
 
 
