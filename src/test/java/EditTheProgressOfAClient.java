@@ -22,6 +22,7 @@ public class EditTheProgressOfAClient {
         // Write code here that turns the phrase above into concrete actions
         this.type=type;
 
+
      }
     @Given("the new value is {string}")
     public void theNewValueIs(String value) {
@@ -31,11 +32,13 @@ public class EditTheProgressOfAClient {
     @When("I edit the progress of client {string}")
     public void iEditTheProgressOfClient(String ID) throws IOException {
         // Write code here that turns the phrase above into concrete actions
+        UniversalMethods.getFile("src/main/resources/clients_with_progress.txt");
         this.ID=ID;
         actualMessage=clients.EditTheProgressOfAClient(type,value,ID);
+        UniversalMethods.returnFile("src/main/resources/clients_with_progress.txt");
 
 
-     }
+    }
     @Then("the system updates the progress data and displays a confirmation message {string}")
     public void theSystemUpdatesTheProgressDataAndDisplaysAConfirmationMessage(String string) {
         // Write code here that turns the phrase above into concrete actions

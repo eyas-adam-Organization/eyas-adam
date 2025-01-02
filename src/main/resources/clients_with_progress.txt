@@ -1,8 +1,8 @@
-1,40,70,40,reserve,program1,no notification,no announcement
-2,40,62,50,reserve,program1,no notification,no announcement
+1,30,70,20,reserve,program1,no notification,no announcement
+2,40,60,50,reserve,program1,no notification,no announcement
 3,60,40,10,reserve,program1,no notification,no announcement
-4,10,100,90,no reserve,program1,no notification,no announcement
-5,40,40,60,reserve,program2,no notification,no announcement
+4,10,90,90,no reserve,program1,no notification,no announcement
+5,40,ll,60,reserve,program2,no notification,no announcement
 6,40,70,40,reserve,program2,no notification,no announcement
 7,40,62,50,reserve,program2,no notification,no announcement
 8,60,40,10,reserve,program3,no notification,no announcement
@@ -11,4 +11,3 @@
 11,60,40,10,reserve,---,no notification,no announcement
 12,10,100,90,no reserve,---,no notification,no announcement
 13,40,40,60,reserve,---,no notification,no announcement
-

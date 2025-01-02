@@ -7,11 +7,11 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/InstructorFeatures/Edit-The-Progress-Of-A-Client.feature",
+        features = {"src/AdminFeatures"},
         monochrome = true,
         snippets = SnippetType.CAMELCASE,
         plugin = {"html: target/cucumber.html"}
 
 )
-public class ClientRunner {
+public class AdminRunner {
 }

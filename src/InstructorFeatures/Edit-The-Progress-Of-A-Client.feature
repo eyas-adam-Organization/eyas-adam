@@ -18,7 +18,7 @@ Feature: Edit the progress of a client
     Given I have a list of clients with progress data
     And the type of the edited value is "1"
     And the new value is "30"
-    When I edit the progress of client "7"
+    When I edit the progress of client "17"
     Then the system displays an error message "This client does not exist"
 
   Scenario Outline: Edit the progress of a client with invalid data

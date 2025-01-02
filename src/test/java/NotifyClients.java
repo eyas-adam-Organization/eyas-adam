@@ -1,4 +1,5 @@
 import io.cucumber.java.en.*;
+import org.junit.jupiter.api.AfterAll;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,7 +49,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;public class NotifyC
 
         }
 
-     }
+
+    }
     @Then("the client {string} should receive the notification {string}")
     public void theClientShouldReceiveTheNotification(String clientID, String notificationToClient) throws FileNotFoundException {
         // Write code here that turns the phrase above into concrete actions
@@ -72,7 +74,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;public class NotifyC
     @When("I notify the clients enrolled in this program with no change")
     public void iNotifyTheClientsEnrolledInThisProgramWithNoChange() throws CloneNotSupportedException, IOException {
         // Write code here that turns the phrase above into concrete actions
-            program=programs.searchForProgram(programTitle);
+         program=programs.searchForProgram(programTitle);
             Program programBefore=(Program) program.clone();
             String s=programs.UpdateProgram(program.getTitle() ,program.getLevel() ,program.getGoal() ,program.getDuration()+"" ,program.getVideo()==null?"null" : program.getVideo().getPath(),program.getImage()==null?"null":program.getImage().getPath(),program.getDocuments()==null? "null":program.getDocuments().getPath(), program.getPrice()+"");
             actualMessage=clients.NotifyClients(programBefore,program);
@@ -92,12 +94,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;public class NotifyC
      }
      @When("I notify for program that does not exist")
      public void iNotifyForProgramThatDoesNotExist() throws CloneNotSupportedException, IOException {
-         program=programs.searchForProgram(programTitle);
+          program=programs.searchForProgram(programTitle);
          Program programBefore;
          if(program==null) programBefore=null;
          else programBefore=(Program) program.clone();
-        actualMessage=clients.NotifyClients(programBefore,program);
+         actualMessage=clients.NotifyClients(programBefore,program);
+
      }
+
+
 
 
 
