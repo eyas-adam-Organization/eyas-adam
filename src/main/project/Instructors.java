@@ -87,9 +87,9 @@ public class Instructors {
         String curLine;
         while (scanner.hasNextLine()){
             curLine=scanner.nextLine();
-            String[]array=curLine.split(",");
-             if(UniversalMethods.isInteger(array[0])){
-                 Instructor instructor=new Instructor(Integer.parseInt(array[0]));
+             String[]array=curLine.split(",");
+               if(UniversalMethods.isInteger(array[2])){
+                 Instructor instructor=new Instructor(Integer.parseInt(array[2]));
                  instructors.add(instructor);
              }
         }

@@ -7,52 +7,56 @@ import java.util.Scanner;
 
 public class Groups {
     private ArrayList<Group> groups;
-    Instructors instructors;
+    private Instructors instructors;
     Clients allClients;
 
     public Groups() throws IOException {
-        Scanner scanner=new Scanner((new File("src/main/resources/groups.txt")));
         groups=new ArrayList<>();
-        instructors=new Instructors();
-         allClients=new Clients();
+
+
+     // printt();
+    }
+       public void loadFromFile(Instructors instructors,Clients allClients) throws FileNotFoundException {
+           this.instructors= instructors;
+           this.allClients=allClients;
+        Scanner scanner=new Scanner((new File("src/main/resources/groups.txt")));
         String curLine = "";
         String groupInfoTemp ="";
         String clientsTemp="";
         String tipTemp;
         String[]groupInfo;
 
-            while (scanner.hasNextLine()){
-                if(!curLine.equals("group"))curLine=scanner.nextLine();
-                if(curLine.equals("group")){
-                    if(scanner.hasNextLine())groupInfoTemp=scanner.nextLine();
-                    if(scanner.hasNextLine())clientsTemp=scanner.nextLine();
-                    if(scanner.hasNextLine()){
-                        ArrayList<String> tips=new ArrayList<>();
-                        ArrayList<Client> clients=new ArrayList<>();
-                       while (scanner.hasNextLine()){
-                           if((curLine=scanner.nextLine()).equals("group"))break;
-                           else if((curLine.split(":")[0].equals("tip"))){
-                               tipTemp=curLine.split(":")[1];
-                               tips.add(tipTemp);
-                           }
-                           else break;
-                       }
-                       String [] clientsArray=clientsTemp.split(",");
-
-                       for(String clientID:clientsArray){
-                           if(UniversalMethods.isInteger(clientID)) clients.add(allClients.searchForClient(Integer.parseInt(clientID)));
-                       }
-                       groupInfo=groupInfoTemp.split(",");
-                       int instructorID=Integer.parseInt(groupInfo[1]);
-                       Group group=new Group(Integer.parseInt(groupInfo[0]),instructors.searchForInstructor(instructorID),Integer.parseInt(groupInfo[2]),groupInfo[3],clients,tips);
-                       groups.add(group);
+        while (scanner.hasNextLine()){
+            if(!curLine.equals("group"))curLine=scanner.nextLine();
+            if(curLine.equals("group")){
+                if(scanner.hasNextLine())groupInfoTemp=scanner.nextLine();
+                if(scanner.hasNextLine())clientsTemp=scanner.nextLine();
+                if(scanner.hasNextLine()){
+                    ArrayList<String> tips=new ArrayList<>();
+                    ArrayList<Client> clients=new ArrayList<>();
+                    while (scanner.hasNextLine()){
+                        if((curLine=scanner.nextLine()).equals("group"))break;
+                        else if((curLine.split(":")[0].equals("tip"))){
+                            tipTemp=curLine.split(":")[1];
+                            tips.add(tipTemp);
+                        }
+                        else break;
                     }
+                    String [] clientsArray=clientsTemp.split(",");
+
+                    for(String clientID:clientsArray){
+                        if(UniversalMethods.isInteger(clientID)) clients.add(allClients.searchForClient(Integer.parseInt(clientID)));
+                    }
+                    groupInfo=groupInfoTemp.split(",");
+                    int instructorID=Integer.parseInt(groupInfo[1]);
+                    Group group=new Group(Integer.parseInt(groupInfo[0]),instructors.searchForInstructor(instructorID),Integer.parseInt(groupInfo[2]),groupInfo[3],clients,tips);
+                    groups.add(group);
                 }
             }
-
-     // printt();
+        }
     }
     public Group SearchForGroup(int ID) throws IOException {
+        loadFromFile(instructors,allClients);
           for(Group group:groups){
              if(group.getGroupID()==ID)return group;
         }
@@ -155,6 +159,22 @@ public class Groups {
             for (String tip:group.getInstructions(instructors,allClients))System.out.println(tip);
             System.out.println();
         }
+    }
+    public String AssignClientsToAGroup(String clintID ,String groupID) throws IOException {
+        Group group;
+        if(!UniversalMethods.isInteger(groupID))return "this group does not exist";
+        if(!UniversalMethods.isInteger(clintID))return "this client does not exist";
+        if((group=this.SearchForGroup(Integer.parseInt(groupID)))==null)return "this group does not exist";
+        if(allClients.searchForClient(Integer.parseInt(clintID))==null)return "this client does not exist";
+        for(Group group1:groups){
+            if(group1.getGroupID()!=Integer.parseInt(groupID)){for(Client client: group1.getClients(instructors,allClients))if(client.getID()==Integer.parseInt(clintID))return "the client is assign to another group";}
+
+            else if(group1.getGroupID()==Integer.parseInt(groupID)){for(Client client: group1.getClients(instructors,allClients))if(client.getID()==Integer.parseInt(clintID))return "the client is already in the group";}
+        }
+        group.addClients(Integer.parseInt(clintID));
+        writeToGroupsFile(group);
+        return "the client have been add to the group";
+
     }
 
 }

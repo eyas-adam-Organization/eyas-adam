@@ -16,8 +16,14 @@ public class CreateANewGroup {
     private String schedules;
     private String time;
     private String groupID;
-    public CreateANewGroup(Groups groups){
+    private Instructors instructors;
+    private Clients allClients;
+    public CreateANewGroup(Groups groups,Instructors instructors,Clients allClients) throws FileNotFoundException {
+
         this.groups=groups;
+        this.instructors=instructors;
+        this.allClients=allClients;
+        groups.loadFromFile(instructors,allClients);
     }
 
 
@@ -34,12 +40,12 @@ public class CreateANewGroup {
     public void iCreateANewGroup() throws IOException {
         // Write code here that turns the phrase above into concrete actions
         actualMessage=groups.CreateGroup(groupID,instructorID,time,schedules);
-     }
+      }
     @Then("the group will be add")
     public void theGroupWillBeAdd() throws IOException {
         // Write code here that turns the phrase above into concrete actions
 
-        assertEquals(groupID,groups.SearchForGroup(Integer.parseInt(groupID)).getGroupID()+"" , "TEST FAILED: Filtered programs do not match expected results.");
+         assertEquals(groupID,groups.SearchForGroup(Integer.parseInt(groupID)).getGroupID()+"" , "TEST FAILED: Filtered programs do not match expected results.");
 
     }
     @Then("the system should display a message for create {string}")

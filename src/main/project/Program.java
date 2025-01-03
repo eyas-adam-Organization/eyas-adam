@@ -23,7 +23,7 @@ public class Program implements Cloneable{
     File image;
     File documents;
     int price;
-    private ArrayList<Client> clients=new ArrayList<>();
+    private ArrayList<Client> clientsForThisProgram=new ArrayList<>();
     Program(String title,  String level, String goal , int duration, File video,  File image,  File documents, int Price){
         this.title = title;
         this.duration = duration;
@@ -35,6 +35,12 @@ public class Program implements Cloneable{
         price = Price;
 
     }
+    ArrayList<Client> getClients(Clients clients,Programs programs) throws FileNotFoundException {
+        clientsForThisProgram.clear();
+        for(Client client:clients.getClients())if(client.getProgram(programs)!=null&&client.getProgram(programs).getTitle().equals(this.getTitle()))clientsForThisProgram.add(client);
+        return clientsForThisProgram;
+    }
+
 
 
 
