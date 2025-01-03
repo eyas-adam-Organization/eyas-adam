@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/InstructorFeatures/Edit-The-Progress-Of-A-Client.feature",
+        features = "src/InstructorFeatures/Assign-Clients-To-A-Group.feature",
         monochrome = true,
         snippets = SnippetType.CAMELCASE,
         plugin = {"html: target/cucumber.html"}

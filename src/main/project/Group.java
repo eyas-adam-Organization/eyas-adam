@@ -11,6 +11,7 @@ public class Group {
     private ArrayList<String> instructions;
     private int time;
     private String schedules;
+    private Clients allClients;
     public Group(int groupID,Instructor instructor,int time,String schedules,ArrayList<Client> clients,ArrayList<String> instructions){
         this.groupID=groupID;
         this.time=time;
@@ -26,6 +27,7 @@ public class Group {
         String clientsTemp="";
         String tipTemp;
         String[]groupInfo;
+        this.allClients=allClients;
 
         while (scanner.hasNextLine()) {
             curLine = scanner.nextLine();
@@ -90,6 +92,11 @@ public class Group {
     public ArrayList<Client> getClients(Instructors instructors,Clients clients) throws IOException {
         SearchForClientInProgress(this.groupID, instructors, clients);
         return this.clients;
+
+    }
+    public void addClients(int clientID){
+        Client client=allClients.searchForClient(clientID);
+        if(client!=null)clients.add(client);
 
     }
 
